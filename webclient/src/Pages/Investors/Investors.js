@@ -7,7 +7,7 @@ import NewInvestor from "./NewInvestor/NewInvestor";
 export default () => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(6);
+  const [ pageSize ] = useState(6);
   const [count, setCount] = useState(0);
   const [open, setOpen] = useState(false);
 
@@ -16,7 +16,6 @@ export default () => {
   };
 
   const handleDialog = (value) => {
-    console.log(value);
     setOpen(value);
   };
 

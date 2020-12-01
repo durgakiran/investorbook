@@ -13,3 +13,9 @@ table {
 .column {
     text-align: left;
 }
+
+td {
+    padding: 15px 0;
+    box-sizing: border-box;
+}
+

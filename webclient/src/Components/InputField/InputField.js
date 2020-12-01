@@ -74,8 +74,8 @@ export default function InputField({ placeholder, onValueChange, validations }) 
         fullWidth={true}
         error={error ? true : false}
         className={classes.root}
+        helperText={error}
       />
-      {error ? <div className="error">{error}</div> : ""}
     </div>
   );
 }
