@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Title from '../../Components/Title/Title';
-import InvestorProfile from '../Investors/InvestorProfile/InvestorProfile';
+import InvestorProfile from '../InvestorProfile/InvestorProfile';
 import TableContainer from '../TableContainer/TableContainer';
 import  styles from './Container.module.css'
 
