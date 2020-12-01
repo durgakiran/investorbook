@@ -1,31 +1,47 @@
-import React from 'react'
-import { useQuery, gql } from '@apollo/client';
-
-// Example of a component that uses apollo-client to fetch data.
-
-const GET_INVESTORS = gql`
-  query GetInvestors {
-      investor(limit: 100) {
-          id
-          name
-      }
-  }
-`;
+import React, { useState } from "react";
+import { TablePagination } from "@material-ui/core";
+import TableTitle from "../../Components/TableTitle/TableTitle";
+import InvestorsTable from "./InvestorTable/InvestorTable";
+import NewInvestor from "./NewInvestor/NewInvestor";
 
 export default () => {
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(6);
+  const [count, setCount] = useState(0);
+  const [open, setOpen] = useState(false);
 
-  const { loading, error, data } = useQuery(GET_INVESTORS);
+  const handleInput = (value) => {
+    setQuery(value);
+  };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-  if (data.investor.length === 0) return <p>The database is empty!</p>
-  console.log(data)
+  const handleDialog = (value) => {
+    console.log(value);
+    setOpen(value);
+  };
 
-  return data.investor.map(({ id, name }) => (
-    <div key={id}>
-      <p>
-        {id} {name}
-      </p>
-    </div>
-  ));
-}
+  return (
+    <>
+      <TableTitle
+        buttonText="Add Investor"
+        handleInput={handleInput}
+        handleDialog={handleDialog}
+      />
+      <NewInvestor open={open} title='Add Investor' handleDialog={handleDialog} />
+      <InvestorsTable
+        query={query}
+        currentPage={currentPage}
+        pageSize={pageSize}
+        onCountChange={setCount}
+      />
+      <TablePagination
+        component="div"
+        count={count}
+        page={currentPage}
+        rowsPerPage={6}
+        rowsPerPageOptions={[6]}
+        onChangePage={(event, newPage) => setCurrentPage(newPage)}
+      />
+    </>
+  );
+};

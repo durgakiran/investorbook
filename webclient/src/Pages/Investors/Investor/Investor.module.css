@@ -1,0 +1,17 @@
+.image {
+  border-radius: 50%;
+  margin: 20px 20px 20px 0;
+}
+
+.name {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 13px;
+  color: #000000;
+}
+
+.investor {
+  display: flex;
+  align-items: center;
+  width: 300px;
+}

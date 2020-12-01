@@ -1,9 +1,9 @@
 import React from "react";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import "./App.css";
-import Investors from "./Pages/Investors/Investors";
 import { BrowserRouter as Router } from "react-router-dom";
+import Container from "./Pages/Container/Container";
+import "./App.css";
 
 const theme = createMuiTheme({
   palette: {
@@ -32,9 +32,9 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <div data-testid="app" className="App">
         <Router>
-          <Investors />
+          <Container />
         </Router>
       </div>
     </ThemeProvider>
