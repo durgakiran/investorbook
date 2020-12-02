@@ -1,6 +1,7 @@
 .investor-profile {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .investor-profile img {

@@ -37,8 +37,6 @@ const GET_INVESTOR = gql`
   }
 `;
 
-
-
 // const DELETE_INVESTMENT = gql`
 //   mutation DeleteInvestment($id: Int!) {
 //     delete_investment(where: {id: {_eq: 10}}) {
@@ -51,15 +49,15 @@ const GET_INVESTOR = gql`
 
 const useStyles = makeStyles({
   button: {
-      '& .MuiButton-label': {
-        fontWeight: 500,
-        fontSize: '15px',
-        lineHeight: '14px',
-        color: '#333FAD',
-        cursor: 'pointer'
-      }
-  }
-})
+    "& .MuiButton-label": {
+      fontWeight: 500,
+      fontSize: "15px",
+      lineHeight: "14px",
+      color: "#333FAD",
+      cursor: "pointer",
+    },
+  },
+});
 
 export default function InvestorProfile() {
   const [openInvestment, setOpenInvestment] = useState(false);
@@ -87,9 +85,9 @@ export default function InvestorProfile() {
     return <div>error</div>;
   }
 
-  if (data.investment.length === 0) {
-    return <div>No Investments so far!</div>;
-  }
+  // if (data.investment.length === 0) {
+  //   return <div>No Investments so far!</div>;
+  // }
 
   return (
     <div>
@@ -114,35 +112,39 @@ export default function InvestorProfile() {
         </Button>
       </div>
       <div className={styles.investments}>
-        <Table columns={columnMappings}>
-          {data.investment.map((row) => {
-            return (
-              <tr key={row.id}>
-                {columnMappings.map((column) => {
-                  if (column.id === "name") {
-                    return <td key={column.id}>{row.company.name}</td>;
-                  }
-                  if (column.id === "amount") {
+        {data.investment.length === 0 ? (
+          <div>No Investments so far!</div>
+        ) : (
+          <Table columns={columnMappings}>
+            {data.investment.map((row) => {
+              return (
+                <tr key={row.id}>
+                  {columnMappings.map((column) => {
+                    if (column.id === "name") {
+                      return <td key={column.id}>{row.company.name}</td>;
+                    }
+                    if (column.id === "amount") {
+                      return (
+                        <td key={column.id}>
+                          <Amount amount={row[column.id]} />
+                        </td>
+                      );
+                    }
                     return (
                       <td key={column.id}>
-                        <Amount amount={row[column.id]} />
+                        {column.id === "actions" ? (
+                          <TableActions id={row.id} />
+                        ) : (
+                          row[column.id]
+                        )}
                       </td>
                     );
-                  }
-                  return (
-                    <td key={column.id}>
-                      {column.id === "actions" ? (
-                        <TableActions  id={row.id}  />
-                      ) : (
-                        row[column.id]
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </Table>
+                  })}
+                </tr>
+              );
+            })}
+          </Table>
+        )}
       </div>
     </div>
   );

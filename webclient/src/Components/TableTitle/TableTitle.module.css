@@ -1,11 +1,13 @@
 .table-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
     padding-top: 20px;
     padding-bottom: 30px;
     box-sizing: border-box;
 }
+
 
 .table-title {
     color: #000000;
@@ -17,4 +19,11 @@
 
 .occ-space {
     flex: 1;
+}
+
+@media (max-width: 960px) {
+    .table-header > * {
+        margin-bottom: 20px;
+        align-self: flex-start;
+    }
 }

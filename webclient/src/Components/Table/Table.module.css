@@ -2,6 +2,10 @@ table {
     border-collapse: collapse;
 }
 
+.table__container {
+    overflow-y: auto;
+}
+
 .table__container > table {
     width: 100%;
 }

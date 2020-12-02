@@ -4,6 +4,12 @@
     padding: 0px 120px;
 }
 
+@media (max-width: 960px) {
+    .investments {
+        padding: 0;
+    }
+}
+
 .table-actions {
     display: flex;
     align-items: center;
@@ -11,6 +17,13 @@
     margin-left: 100px;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+
+@media (max-width: 960px) {
+    .table-actions {
+        margin-left: 0;
+    }
 }
 
 .sub-title {

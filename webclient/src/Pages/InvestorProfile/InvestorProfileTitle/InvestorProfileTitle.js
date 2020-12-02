@@ -6,6 +6,7 @@ import Amount from "../../../Components/Amount/Amount";
 import styles from "./InvestorProfileTitle.module.css";
 import editIcon from "./edit-icon.svg";
 import deleteIcon from "./delete-icon.svg";
+import Image from "../../../Components/Image/Image";
 
 const useStyles = makeStyles({
     button: {
@@ -32,7 +33,7 @@ export default function InvestorProfileTitle({
       <Button onClick={() => history.goBack()}>
         <img src={back} className={styles["back-icon"]} alt="previous page" />
       </Button>
-      {image && <img src={image} alt={name} />}
+      <Image alt={name} src={image} />
       <div className={styles.investor}>
         <div className={styles["investor-name"]}>{name}</div>
         <div className={styles.amount}>
