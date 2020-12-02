@@ -23,10 +23,11 @@ function isEmpty(value) {
 
 function matchPattern(value, pattern) {
     const regex = new RegExp(pattern);
+    console.log(new RegExp(pattern), regex.test(value))
     return regex.test(value);
 }
 
-export default function InputField({ placeholder, onValueChange, validations }) {
+export default function InputField({ placeholder, onValueChange, validations, inputType }) {
   const [error, setError] = useState();
   const classes = useStyles();
   
@@ -44,7 +45,7 @@ export default function InputField({ placeholder, onValueChange, validations }) 
             setError('Field is required');
             break;
         }
-        if(validations[i].type === 'pattern' && matchPattern(validations[i].pattern) ) {
+        if(validations[i].type === 'pattern' && !matchPattern(value, validations[i].pattern) ) {
             setError('Invalid Pattern');
             break;
         }
@@ -75,6 +76,7 @@ export default function InputField({ placeholder, onValueChange, validations }) 
         error={error ? true : false}
         className={classes.root}
         helperText={error}
+        type={ inputType || 'text' }
       />
     </div>
   );

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import Table from "../../Components/Table/Table";
 import InvestorProfileTitle from "./InvestorProfileTitle/InvestorProfileTitle";
 import Amount from "../../Components/Amount/Amount";
-import styles from './InvestorProfile.module.css';
+import styles from "./InvestorProfile.module.css";
 import TableActions from "../../Components/TableActions/TableActions";
 import AddInvestment from "./AddInvestment/AddInvestment";
+import { Button } from "@material-ui/core";
 // import TableActions from "../TableActions/TableActions";
 // import InvestorProfileTitle from "../InvestorProfileTitle/InvestorProfileTitle";
 
@@ -37,6 +38,12 @@ const GET_INVESTOR = gql`
 `;
 
 export default function InvestorProfile() {
+  const [openInvestment, setOpenInvestment] = useState(false);
+
+  const handleAddInvestment = (value) => {
+    setOpenInvestment(value);
+  };
+
   const columnMappings = [
     { id: "name", column: "Name" },
     { id: "amount", column: "Amount" },
@@ -67,36 +74,49 @@ export default function InvestorProfile() {
         image={data.investor_by_pk.photo_thumbnail}
         amount={data.investment_aggregate.aggregate.sum.amount}
       />
-      <AddInvestment />
+      <AddInvestment
+        investorId={data.investor_by_pk.id}
+        open={openInvestment}
+        handleAddInvestment={handleAddInvestment}
+      />
       <div className={styles["table-actions"]}>
         <div className={styles["sub-title"]}>Investments</div>
-        <div className={styles["add-investment"]}>+ Add Investments</div>
+        <Button
+          className={styles["add-investment"]}
+          onClick={() => handleAddInvestment(true)}
+        >
+          + Add Investments
+        </Button>
       </div>
       <div className={styles.investments}>
         <Table columns={columnMappings}>
-            {data.investment.map((row) => {
+          {data.investment.map((row) => {
             return (
-                <tr key={row.id}>
+              <tr key={row.id}>
                 {columnMappings.map((column) => {
-                    if (column.id === "name") {
+                  if (column.id === "name") {
                     return <td key={column.id}>{row.company.name}</td>;
-                    }
-                    if (column.id === "amount") {
+                  }
+                  if (column.id === "amount") {
                     return (
-                        <td key={column.id}>
+                      <td key={column.id}>
                         <Amount amount={row[column.id]} />
-                        </td>
+                      </td>
                     );
-                    }
-                    return (
+                  }
+                  return (
                     <td key={column.id}>
-                        {column.id === "actions" ? <TableActions /> : row[column.id]}
+                      {column.id === "actions" ? (
+                        <TableActions />
+                      ) : (
+                        row[column.id]
+                      )}
                     </td>
-                    );
+                  );
                 })}
-                </tr>
+              </tr>
             );
-            })}
+          })}
         </Table>
       </div>
     </div>
