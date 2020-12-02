@@ -23,13 +23,3 @@ services:
       - ./hasura/migrations:/hasura-migrations
       - ./hasura/metadata:/hasura-metadata
     restart: always
-  webclient:
-    build: ./webclient
-    ports:
-      - 3001:3000
-    volumes:
-      - ./webclient/src:/app/src
-      - ./webclient/public:/app/public
-    environment:
-      - NODE_ENV=development
-    tty: true
