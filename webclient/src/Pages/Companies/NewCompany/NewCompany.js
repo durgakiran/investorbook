@@ -41,7 +41,7 @@ export default function NewCompany({ title, open, handleDialog }) {
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const [severity, setSeverity] = useState("success");
   const [message, setMessage] = useState("");
-  const [addInvestor, { loading, error, data }] = useMutation(INSERT_COMPANY, {
+  const [addInvestor, { loading }] = useMutation(INSERT_COMPANY, {
     onCompleted: (addedData) => {
       handleAfterDataUpdate(addedData);
     },

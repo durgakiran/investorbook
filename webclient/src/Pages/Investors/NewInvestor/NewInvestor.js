@@ -59,7 +59,7 @@ export default function NewInvestor({ title, open, handleDialog }) {
     setIsProfilePicUrlThumbnailValid,
   ] = useState(false);
 
-  const [addInvestor, { loading, error, data }] = useMutation(INSERT_INVESTOR, {
+  const [addInvestor, { loading }] = useMutation(INSERT_INVESTOR, {
     onCompleted: (addedData) => {
       handleAfterDataUpdate(addedData);
     },

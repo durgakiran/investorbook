@@ -7,7 +7,7 @@ import Amount from "../../Components/Amount/Amount";
 import styles from "./InvestorProfile.module.css";
 import TableActions from "../../Components/TableActions/TableActions";
 import AddInvestment from "./AddInvestment/AddInvestment";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 // import TableActions from "../TableActions/TableActions";
 // import InvestorProfileTitle from "../InvestorProfileTitle/InvestorProfileTitle";
 
@@ -37,8 +37,33 @@ const GET_INVESTOR = gql`
   }
 `;
 
+
+
+// const DELETE_INVESTMENT = gql`
+//   mutation DeleteInvestment($id: Int!) {
+//     delete_investment(where: {id: {_eq: 10}}) {
+//       returning {
+//         id
+//       }
+//     }
+//   }
+// `
+
+const useStyles = makeStyles({
+  button: {
+      '& .MuiButton-label': {
+        fontWeight: 500,
+        fontSize: '15px',
+        lineHeight: '14px',
+        color: '#333FAD',
+        cursor: 'pointer'
+      }
+  }
+})
+
 export default function InvestorProfile() {
   const [openInvestment, setOpenInvestment] = useState(false);
+  const classes = useStyles();
 
   const handleAddInvestment = (value) => {
     setOpenInvestment(value);
@@ -82,7 +107,7 @@ export default function InvestorProfile() {
       <div className={styles["table-actions"]}>
         <div className={styles["sub-title"]}>Investments</div>
         <Button
-          className={styles["add-investment"]}
+          className={classes.button}
           onClick={() => handleAddInvestment(true)}
         >
           + Add Investments
@@ -107,7 +132,7 @@ export default function InvestorProfile() {
                   return (
                     <td key={column.id}>
                       {column.id === "actions" ? (
-                        <TableActions />
+                        <TableActions  id={row.id}  />
                       ) : (
                         row[column.id]
                       )}

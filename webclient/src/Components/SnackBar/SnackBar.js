@@ -1,5 +1,5 @@
 import React from "react";
-import { Snackbar, Aler } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 
 export default function SnackBarElement({
   open,

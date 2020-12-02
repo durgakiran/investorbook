@@ -4,7 +4,7 @@ import editIcon from "./edit-icon.svg";
 import deleteIcon from './delete-icon.svg';
 
 
-export default function TableActions() {
+export default function TableActions({ id, handleEdit, handleDelete }) {
     return (
         <div>
             <IconButton>

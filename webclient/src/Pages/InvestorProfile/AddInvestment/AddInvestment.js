@@ -7,11 +7,24 @@ import {
   DialogTitle,
   TextField,
   CircularProgress,
+  makeStyles,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import InputField from "../../../Components/InputField/InputField";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import SnackBarElement from "../../../Components/SnackBar/SnackBar";
+import styles from "./AddInvestment.module.css";
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiTypography-h6": {
+      fontWeight: 700,
+      fontSize: "24px",
+      lineHeight: "32px",
+      color: "#000000",
+    },
+  },
+});
+
 
 const GET_INVESTORS = gql`
   query GetCompanies($searchQuery: String!) {
@@ -58,10 +71,10 @@ export default function AddInvestment({
   const [openAutoSuggest, setOpenAutoSuggest] = useState(false);
   const [companyId, setCompanyId] = useState("");
   const [amount, setAmount] = useState();
-  const [showSnackBar, setShowSnackBar] = useState();
   const { loading, error, data } = useQuery(GET_INVESTORS, {
     variables: { searchQuery: `%${query}%` },
   });
+  const classes = useStyles();
 
   const [addInvestor] = useMutation(INSERT_INVESTMENT, {
     onCompleted: (addedData) => {
@@ -82,7 +95,6 @@ export default function AddInvestment({
   };
 
   const handleAfterDataUpdate = () => {
-    setShowSnackBar(true);
     handleAddInvestment(false);
   };
 
@@ -92,17 +104,11 @@ export default function AddInvestment({
 
   return (
     <Dialog fullWidth={true} open={open}>
-      {showSnackBar && (
-        <SnackBarElement
-          open={showSnackBar}
-          duration={3000}
-          message="Added Successfully"
-          handleClose={() => setShowSnackBar(false)}
-        />
-      )}
-      <DialogTitle>
+      <DialogTitle className={classes.root}>
         Add Investment
-        <div>Please Enter the Details of the Investment</div>
+        <div className={styles["sub-title"]}>
+          Please Enter the Details of the Investment
+        </div>
       </DialogTitle>
       <form onSubmit={handleDataUpdate}>
         <DialogContent>
@@ -154,7 +160,7 @@ export default function AddInvestment({
           <Button type="button" onClick={() => handleAddInvestment(false)}>
             Cancel
           </Button>
-          <Button type="submit">Add Investment</Button>
+          <Button color="primary" variant="contained"  type="submit">Add Investment</Button>
         </DialogActions>
       </form>
     </Dialog>

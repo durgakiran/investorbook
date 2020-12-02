@@ -25,7 +25,7 @@ export default function CompanyInvestors({ id }) {
   if(error) {
       return <p>error</p>
   }
-  if (data.investment.length === 0) return <p>The database is empty!</p>;
+  if (data.investment.length === 0) return <p>No Investors found!</p>;
 
   return (
       data.investment.map((value, index) => {
