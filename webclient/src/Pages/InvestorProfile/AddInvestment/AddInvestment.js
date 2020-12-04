@@ -16,6 +16,7 @@ import styles from "./AddInvestment.module.css";
 
 const useStyles = makeStyles({
   root: {
+    padding: "28px 22px 18px 32px",
     "& .MuiTypography-h6": {
       fontWeight: 700,
       fontSize: "24px",
@@ -25,6 +26,30 @@ const useStyles = makeStyles({
   },
 });
 
+const useDialogStyles = makeStyles({
+  root: {
+    padding: "28px 22px 18px 32px",
+  },
+});
+
+const useButtonStyles = makeStyles({
+  root: {
+    backgroundColor: "#434FBC",
+    borderRadius: "4px",
+    textTransform: "capitalize",
+    boxShadow: "none",
+  },
+});
+
+const useButtonStyles2 = makeStyles({
+  root: {
+    fontWeight: 500,
+    fontSize: "13px",
+    lineHeight: "12px",
+    color: "#434FBC",
+    textTransform: 'capitalize'
+  },
+});
 
 const GET_INVESTORS = gql`
   query GetCompanies($searchQuery: String!) {
@@ -75,6 +100,9 @@ export default function AddInvestment({
     variables: { searchQuery: `%${query}%` },
   });
   const classes = useStyles();
+  const dialogClasses = useDialogStyles();
+  const buttonClasses = useButtonStyles();
+  const buttonClasses2 = useButtonStyles2();
 
   const [addInvestor] = useMutation(INSERT_INVESTMENT, {
     onCompleted: (addedData) => {
@@ -111,7 +139,7 @@ export default function AddInvestment({
         </div>
       </DialogTitle>
       <form onSubmit={handleDataUpdate}>
-        <DialogContent>
+        <DialogContent className={dialogClasses.root}>
           <Autocomplete
             id="combo-box-demo"
             fullWidth={true}
@@ -156,11 +184,22 @@ export default function AddInvestment({
             onValueChange={({ isFormValid, value }) => setAmount(value)}
           />
         </DialogContent>
-        <DialogActions>
-          <Button type="button" onClick={() => handleAddInvestment(false)}>
+        <DialogActions className={dialogClasses.root}>
+          <Button
+            className={buttonClasses2.root}
+            type="button"
+            onClick={() => handleAddInvestment(false)}
+          >
             Cancel
           </Button>
-          <Button color="primary" variant="contained"  type="submit">Add Investment</Button>
+          <Button
+            color="primary"
+            className={buttonClasses.root}
+            variant="contained"
+            type="submit"
+          >
+            Add Investment
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

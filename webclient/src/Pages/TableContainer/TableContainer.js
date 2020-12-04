@@ -1,11 +1,11 @@
 import { Tab, Tabs, withStyles } from "@material-ui/core";
 import React from "react";
 import Companies from "../Companies/Companies";
-import Investors from '../Investors/Investors';
-import styles from './TableContainer.module.css';
+import Investors from "../Investors/Investors";
+import styles from "./TableContainer.module.css";
 
 function TabPanel(props) {
-  const {  value, index, children } = props;
+  const { value, index, children } = props;
 
   return (
     <div
@@ -14,11 +14,9 @@ function TabPanel(props) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
-      {value === index && (
-        children
-      )}
+      {value === index && children}
     </div>
-  );    
+  );
 }
 
 function a11yProps(index) {
@@ -28,28 +26,35 @@ function a11yProps(index) {
   };
 }
 
-
-const StyledTabs =  withStyles({
+const StyledTabs = withStyles({
   root: {
-    borderBottom: '1px solid #000000;',
+    borderBottom: "1px solid #000000;",
     textAlign: "left",
-    '& .wrapper': {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        '& .MuiTabItem-labelGroup': {
-          minWidth: 0,
-        },
-        '& .MuiTabItem-label': {
-          display: 'flex',
-          alignItems: 'center',
-        }
-    }
+    "& .MuiTab-textColorInherit": {
+      color: "#A0A0A0",
+    },
+    "& .Mui-selected": {
+      color: "#000000",
+    },
+    "& .MuiTab-wrapper": {
+      flexDirection: "row",
+      textTransform: "capitalize",
+      fontSize: "18px",
+      justifyContent: "flex-start",
+      "& .MuiTabItem-labelGroup": {
+        minWidth: 0,
+      },
+      "& .MuiTabItem-label": {
+        display: "flex",
+        alignItems: "center",
+      },
+    },
   },
   indicator: {
-    backgroundColor: '#000000'
-  }
+    backgroundColor: "#000000",
+    borderBottom: "3px solid #000000",
+  },
 })(Tabs);
-
 
 export default function TableContainer() {
   const [value, setValue] = React.useState(0);
@@ -60,7 +65,11 @@ export default function TableContainer() {
 
   return (
     <div className={styles.table__container}>
-      <StyledTabs value={value} onChange={handleChange} aria-label="investors tabs">
+      <StyledTabs
+        value={value}
+        onChange={handleChange}
+        aria-label="investors tabs"
+      >
         <Tab label="Investors" {...a11yProps(0)} />
         <Tab label="Companies" {...a11yProps(1)} />
       </StyledTabs>

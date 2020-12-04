@@ -4,6 +4,7 @@ import Table from "../../../Components/Table/Table";
 import Investor from "../Investor/Investor";
 import Investments from "../Investments/Investments";
 import { CircularProgress } from "@material-ui/core";
+import styles from './InvestorTable.module.css';
 
 export const SEARCH_INVESTORS = gql`
   query SearchInvestors($searchQuery: String!, $skip: Int!, $pageSize: Int!) {
@@ -82,7 +83,7 @@ export default function InvestorsTable({
                 );
               }
               return (
-                <td key={value.id}>
+                <td key={value.id} className={styles.column}>
                   <Investments id={datum.id} />
                 </td>
               );

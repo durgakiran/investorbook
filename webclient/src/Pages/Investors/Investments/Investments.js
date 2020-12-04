@@ -29,7 +29,7 @@ export default function Investments({ id }) {
   if (error) {
     return <p>error</p>;
   }
-  if (data.investment.length === 0) return <p>The database is empty!</p>;
+  if (data.investment.length === 0) return <p>No Investments!</p>;
 
   return data.investment.map((value, index) => {
     return (

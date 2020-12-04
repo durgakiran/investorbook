@@ -64,7 +64,7 @@ export default function CompaniesTable({
             {columnMappings.map((value) => {
               if (value.id === "name") {
                 return (
-                  <td key={datum[value.id]}>
+                  <td key={datum[value.id]} className={styles['pl-10']}>
                       <div className={styles["company-name"]}>
                             {datum[value.id]}
                       </div>
@@ -72,7 +72,7 @@ export default function CompaniesTable({
                 );
               }
               return (
-                <td key={value.id}>
+                <td key={value.id} className={styles['pl-10']}>
                   <CompanyInvestors id={datum.id} />
                 </td>
               );

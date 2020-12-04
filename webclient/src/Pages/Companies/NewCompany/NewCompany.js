@@ -12,14 +12,42 @@ import { gql, useMutation } from "@apollo/client";
 import InputField from "../../../Components/InputField/InputField";
 import SnackBarElement from "../../../Components/SnackBar/SnackBar";
 
+
 const useStyles = makeStyles({
   root: {
+    padding: '28px 22px 18px 32px',
     "& .MuiTypography-h6": {
       fontWeight: 700,
       fontSize: "24px",
       lineHeight: "32px",
       color: "#000000",
     },
+  },
+});
+
+const useDialogStyles = makeStyles({
+  root: {
+    padding: '28px 22px 18px 32px'
+  }
+});
+
+
+const useButtonStyles = makeStyles({
+  root: {
+    backgroundColor: "#434FBC",
+    borderRadius: "4px",
+    textTransform: "capitalize",
+    boxShadow: "none",
+  },
+});
+
+const useButtonStyles2 = makeStyles({
+  root: {
+    fontWeight: 500,
+    fontSize: "13px",
+    lineHeight: "12px",
+    color: "#434FBC",
+    textTransform: "capitalize",
   },
 });
 
@@ -47,6 +75,9 @@ export default function NewCompany({ title, open, handleDialog }) {
     },
   });
   const classes = useStyles();
+  const dialogClasses = useDialogStyles();
+  const buttonClasses = useButtonStyles();
+  const buttonClasses2 = useButtonStyles2();
 
   const handleAfterDataUpdate = (addedData) => {
     try {
@@ -88,7 +119,7 @@ export default function NewCompany({ title, open, handleDialog }) {
       >
         <DialogTitle className={classes.root}>{title}</DialogTitle>
         <form onSubmit={handleSubmit}>
-          <DialogContent>
+          <DialogContent className={dialogClasses.root}>
             <InputField
               placeholder="Company Name"
               validations={[
@@ -101,8 +132,10 @@ export default function NewCompany({ title, open, handleDialog }) {
               }}
             />
           </DialogContent>
-          <DialogActions>
-            <Button type="button" onClick={() => handleDialog(false)}>
+          <DialogActions className={dialogClasses.root}>
+            <Button type="button" 
+            className={buttonClasses2.root}
+            onClick={() => handleDialog(false)}>
               Cancel
             </Button>
             {loading ? (
@@ -110,6 +143,7 @@ export default function NewCompany({ title, open, handleDialog }) {
             ) : (
               <Button
                 variant="contained"
+                className={buttonClasses.root}
                 disabled={!isNameValid}
                 type="submit"
                 color="primary"

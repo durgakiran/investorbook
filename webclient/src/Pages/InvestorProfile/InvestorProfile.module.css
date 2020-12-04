@@ -1,7 +1,7 @@
 .investments {
     height: 60vh;
     overflow-y: auto;
-    padding: 0px 120px;
+    padding: 0px 170px;
 }
 
 @media (max-width: 960px) {
@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 100px;
+    margin-left: 175px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -41,3 +41,24 @@
     color: #333FAD;
     cursor: pointer;
 }
+
+.column {
+    padding-left: 10px;
+}
+
+.name {
+    padding-left: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 13px;
+    color: #000000;
+}
+
+.amount {
+    padding-left: 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 11px;
+    color: #242424;
+}
+

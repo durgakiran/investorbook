@@ -55,6 +55,7 @@ const useStyles = makeStyles({
       lineHeight: "14px",
       color: "#333FAD",
       cursor: "pointer",
+      textTransform: 'capitalize'
     },
   },
 });
@@ -121,17 +122,19 @@ export default function InvestorProfile() {
                 <tr key={row.id}>
                   {columnMappings.map((column) => {
                     if (column.id === "name") {
-                      return <td key={column.id}>{row.company.name}</td>;
+                      return <td key={column.id} className={styles.name}>
+                        {row.company.name}
+                        </td>;
                     }
                     if (column.id === "amount") {
                       return (
-                        <td key={column.id}>
+                        <td key={column.id} className={styles.amount}>
                           <Amount amount={row[column.id]} />
                         </td>
                       );
                     }
                     return (
-                      <td key={column.id}>
+                      <td key={column.id} className={styles.column}>
                         {column.id === "actions" ? (
                           <TableActions id={row.id} />
                         ) : (

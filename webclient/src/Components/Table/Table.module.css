@@ -16,6 +16,15 @@ table {
 
 .column {
     text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #797979;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    box-sizing: border-box;
 }
 
 td {

@@ -37,7 +37,7 @@ export default function InvestorProfileTitle({
       <div className={styles.investor}>
         <div className={styles["investor-name"]}>{name}</div>
         <div className={styles.amount}>
-          total Amount Invested
+          Total Amount Invested:&nbsp;
           <Amount amount={amount} />
         </div>
       </div>

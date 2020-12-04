@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { TablePagination } from "@material-ui/core";
 import  TableTitle from "../../Components/TableTitle/TableTitle";
 import CompaniesTable from "./CompaniesTable/CompaniesTable";
 import NewCompany from "./NewCompany/NewCompany";
+import Paginator from "../../Components/Paginator/Paginator";
 
 export default function Companies() {
   const [query, setQuery] = useState("");
@@ -33,14 +33,10 @@ export default function Companies() {
       currentPage={currentPage}
       pageSize={pageSize}
       onCountChange={setCount}/>
-      <TablePagination
-        component="div"
+      <Paginator 
         count={count}
-        page={currentPage}
-        rowsPerPage={6}
-        rowsPerPageOptions={[6]}
-        onChangePage={(event, newPage) => setCurrentPage(newPage)}
-      />
+        currentPage={currentPage}
+        handlePageChange={setCurrentPage}/>
     </>
   );
 }
