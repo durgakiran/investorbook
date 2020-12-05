@@ -192,7 +192,7 @@ export default function AddInvestorForm({
           type="submit"
           color="primary"
         >
-          Add Company
+          {companyId ? 'Update Company' : 'Add Company' }
         </Button>
       </DialogActions>
     </form>
