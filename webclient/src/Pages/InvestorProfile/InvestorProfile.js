@@ -8,8 +8,6 @@ import styles from "./InvestorProfile.module.css";
 import TableActions from "../../Components/TableActions/TableActions";
 import AddInvestment from "./AddInvestment/AddInvestment";
 import { Button, makeStyles } from "@material-ui/core";
-// import TableActions from "../TableActions/TableActions";
-// import InvestorProfileTitle from "../InvestorProfileTitle/InvestorProfileTitle";
 
 const GET_INVESTOR = gql`
   query GetInvestor($id: Int!) {
@@ -64,19 +62,20 @@ export default function InvestorProfile() {
   const [openInvestment, setOpenInvestment] = useState(false);
   const classes = useStyles();
 
-  const handleAddInvestment = (value) => {
-    setOpenInvestment(value);
-  };
-
   const columnMappings = [
     { id: "name", column: "Name" },
     { id: "amount", column: "Amount" },
     { id: "actions", column: "Actions" },
   ];
   const { id } = useParams();
-  const { loading, error, data } = useQuery(GET_INVESTOR, {
+  const { loading, error, data, refetch } = useQuery(GET_INVESTOR, {
     variables: { id: Number(id) },
   });
+
+  const handleAddInvestment = (value) => {
+    refetch();
+    setOpenInvestment(value);
+  };
 
   if (loading) {
     return <div>loading...</div>;
@@ -85,10 +84,6 @@ export default function InvestorProfile() {
   if (error) {
     return <div>error</div>;
   }
-
-  // if (data.investment.length === 0) {
-  //   return <div>No Investments so far!</div>;
-  // }
 
   return (
     <div>
@@ -107,7 +102,7 @@ export default function InvestorProfile() {
         <div className={styles["sub-title"]}>Investments</div>
         <Button
           className={classes.button}
-          onClick={() => handleAddInvestment(true)}
+          onClick={() => setOpenInvestment(true)}
         >
           + Add Investments
         </Button>
