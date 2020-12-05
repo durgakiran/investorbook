@@ -19,6 +19,7 @@ export default function InputField({
   placeholder,
   onValueChange,
   error,
+  value,
   inputType,
 }) {
   const classes = useStyles();
@@ -26,6 +27,7 @@ export default function InputField({
   return (
     <div className={styles["text-field"]}>
       <TextField
+        value={value}
         onChange={onValueChange}
         onBlur={onTouched}
         placeholder={placeholder}

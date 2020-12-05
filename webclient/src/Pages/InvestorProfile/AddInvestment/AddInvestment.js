@@ -32,10 +32,29 @@ const INSERT_INVESTMENT = gql`
   }
 `;
 
+
+const UPDATE_INVESTMENT = gql`
+  mutation UpdateInvestment($Id: Int!, $amount: numeric!) {
+    update_investment(where: { id: { _eq: $Id } }, _set: {amount: $amount}) {
+      returning {
+        id
+        amount
+        company {
+          name
+        }
+      }
+    }
+  }
+`;
+
+
 export default function AddInvestment({
   investorId,
   open,
   handleAddInvestment,
+  actionId,
+  previousAmount,
+  companyName
 }) {
   const classes = useStyles();
 
@@ -45,13 +64,27 @@ export default function AddInvestment({
     },
   });
 
+  const [updateInvestment] = useMutation(UPDATE_INVESTMENT, {
+    onCompleted: (updatedData) => {
+      handleAfterDataUpdate(updatedData);
+    },
+  });
+
   const handleDataUpdate = (values) => {
-    console.log(values);
-    addInvestor({
-      variables: {
-        ...values,
-      },
-    });
+    if(actionId) {
+      updateInvestment({
+        variables: {
+          Id: actionId,
+          amount: values.amount
+        }
+      });
+    } else {
+      addInvestor({
+        variables: {
+          ...values,
+        },
+      });
+    }
   };
 
   const handleAfterDataUpdate = () => {
@@ -61,7 +94,7 @@ export default function AddInvestment({
   return (
     <Dialog fullWidth={true} open={open}>
       <DialogTitle className={classes.root}>
-        Add Investment
+        { actionId ?  `Edit Investment: ${companyName}` : "Add Investment"}
         <div className={styles["sub-title"]}>
           Please Enter the Details of the Investment
         </div>
@@ -70,6 +103,9 @@ export default function AddInvestment({
         closeDialog={() => handleAddInvestment(false)}
         id={investorId}
         handleFormSubmit={handleDataUpdate}
+        previousAmount={previousAmount}
+        companyId={actionId}
+        companyName={companyName}
       />
     </Dialog>
   );

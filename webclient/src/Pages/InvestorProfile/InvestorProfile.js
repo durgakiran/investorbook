@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import Table from "../../Components/Table/Table";
 import InvestorProfileTitle from "./InvestorProfileTitle/InvestorProfileTitle";
@@ -8,6 +8,7 @@ import styles from "./InvestorProfile.module.css";
 import TableActions from "../../Components/TableActions/TableActions";
 import AddInvestment from "./AddInvestment/AddInvestment";
 import { Button, makeStyles } from "@material-ui/core";
+import { ConfirmDialog } from "../../Components/ConfirmDialog/ConfirmDialog";
 
 const GET_INVESTOR = gql`
   query GetInvestor($id: Int!) {
@@ -35,15 +36,15 @@ const GET_INVESTOR = gql`
   }
 `;
 
-// const DELETE_INVESTMENT = gql`
-//   mutation DeleteInvestment($id: Int!) {
-//     delete_investment(where: {id: {_eq: 10}}) {
-//       returning {
-//         id
-//       }
-//     }
-//   }
-// `
+const DELETE_INVESTMENT = gql`
+  mutation DeleteInvestment($id: Int!) {
+    delete_investment(where: { id: { _eq: $id } }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
 
 const useStyles = makeStyles({
   button: {
@@ -53,13 +54,17 @@ const useStyles = makeStyles({
       lineHeight: "14px",
       color: "#333FAD",
       cursor: "pointer",
-      textTransform: 'capitalize'
+      textTransform: "capitalize",
     },
   },
 });
 
 export default function InvestorProfile() {
   const [openInvestment, setOpenInvestment] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [actionId, setActionId] = useState();
+  const [recordName, setRecordName] = useState();
+  const [previousAmount, setPreviousAmount] = useState();
   const classes = useStyles();
 
   const columnMappings = [
@@ -71,10 +76,38 @@ export default function InvestorProfile() {
   const { loading, error, data, refetch } = useQuery(GET_INVESTOR, {
     variables: { id: Number(id) },
   });
+  const [deleteInvestment] = useMutation(DELETE_INVESTMENT, {
+    onCompleted: () => {
+      setActionId();
+      setRecordName();
+      refetch();
+    },
+  });
 
   const handleAddInvestment = (value) => {
+    setActionId();
+    setRecordName();
+    setPreviousAmount();
     refetch();
     setOpenInvestment(value);
+  };
+
+  const handleEdit = (id, name, amount) => {
+    setActionId(id);
+    setRecordName(name);
+    setPreviousAmount(amount);
+    setOpenInvestment(true);
+  };
+
+  const handleDelete = (id, name) => {
+    setActionId(id);
+    setRecordName(name);
+    setDeleteOpen(true);
+  };
+
+  const deleteRecord = () => {
+    deleteInvestment({ variables: { id: actionId } });
+    setDeleteOpen(false);
   };
 
   if (loading) {
@@ -97,6 +130,15 @@ export default function InvestorProfile() {
         investorId={data.investor_by_pk.id}
         open={openInvestment}
         handleAddInvestment={handleAddInvestment}
+        actionId={actionId}
+        companyName={recordName}
+        previousAmount={previousAmount}
+      />
+      <ConfirmDialog
+        title={`Confirm Delete ${recordName}`}
+        open={deleteOpen}
+        closeDialog={() => setDeleteOpen(false)}
+        confirm={deleteRecord}
       />
       <div className={styles["table-actions"]}>
         <div className={styles["sub-title"]}>Investments</div>
@@ -117,9 +159,11 @@ export default function InvestorProfile() {
                 <tr key={row.id}>
                   {columnMappings.map((column) => {
                     if (column.id === "name") {
-                      return <td key={column.id} className={styles.name}>
-                        {row.company.name}
-                        </td>;
+                      return (
+                        <td key={column.id} className={styles.name}>
+                          {row.company.name}
+                        </td>
+                      );
                     }
                     if (column.id === "amount") {
                       return (
@@ -131,7 +175,15 @@ export default function InvestorProfile() {
                     return (
                       <td key={column.id} className={styles.column}>
                         {column.id === "actions" ? (
-                          <TableActions id={row.id} />
+                          <TableActions
+                            id={row.id}
+                            handleEdit={() =>
+                              handleEdit(row.id, row.company.name, row.amount)
+                            }
+                            handleDelete={() =>
+                              handleDelete(row.id, row.company.name)
+                            }
+                          />
                         ) : (
                           row[column.id]
                         )}

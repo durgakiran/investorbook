@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   Button,
-    CircularProgress,
+  CircularProgress,
   DialogActions,
   DialogContent,
   TextField,
@@ -22,7 +22,14 @@ const GET_INVESTORS = gql`
   }
 `;
 
-export default function AddInvestorForm({ id, closeDialog, handleFormSubmit }) {
+export default function AddInvestorForm({
+  id,
+  companyId,
+  companyName,
+  previousAmount,
+  closeDialog,
+  handleFormSubmit,
+}) {
   const dialogClasses = useDialogStyles();
   const buttonClasses = useButtonStyles();
   const buttonClasses2 = useButtonStyles2();
@@ -35,9 +42,9 @@ export default function AddInvestorForm({ id, closeDialog, handleFormSubmit }) {
   const [form, setForm] = useState({
     formControls: {
       companyId: {
-        value: "",
+        value: companyId ? companyId : "",
         placeholder: "Select Company",
-        valid: false,
+        valid: companyId ? true : false,
         touched: false,
         message: "",
         validationRules: [{ type: "required", value: "true" }],
@@ -51,7 +58,7 @@ export default function AddInvestorForm({ id, closeDialog, handleFormSubmit }) {
         validationRules: [{ type: "required", value: "true" }],
       },
       amount: {
-        value: "",
+        value: previousAmount ? previousAmount : "",
         placeholder: "Investment Amount",
         valid: false,
         touched: false,
@@ -115,46 +122,51 @@ export default function AddInvestorForm({ id, closeDialog, handleFormSubmit }) {
   return (
     <form onSubmit={formSubmitHandler}>
       <DialogContent className={dialogClasses.root}>
-        <Autocomplete
-          id="combo-box-demo"
-          fullWidth={true}
-          open={openAutoSuggest}
-          onOpen={() => setOpenAutoSuggest(true)}
-          onClose={() => setOpenAutoSuggest(false)}
-          options={data ? data.company : []}
-          getOptionLabel={(option) => option.name}
-          getOptionSelected={(option, value) => {
-            return option.id === value.id;
-          }}
-          onChange={(event, newValue) => {
-            changeHandler({
-              target: { name: "companyId", value: newValue.id },
-            });
-          }}
-          loading={loading}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search Companies"
-              onChange={({ target: { value } }) => setQuery(value)}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <React.Fragment>
-                    {loading ? (
-                      <CircularProgress color="inherit" size={20} />
-                    ) : null}
-                    {params.InputProps.endAdornment}
-                  </React.Fragment>
-                ),
-              }}
-            />
-          )}
-        />
+        {!companyId ? (
+          <Autocomplete
+            id="combo-box-demo"
+            fullWidth={true}
+            open={openAutoSuggest}
+            onOpen={() => setOpenAutoSuggest(true)}
+            onClose={() => setOpenAutoSuggest(false)}
+            options={data ? data.company : []}
+            getOptionLabel={(option) => option.name}
+            getOptionSelected={(option, value) => {
+              return option.id === value.id;
+            }}
+            onChange={(event, newValue) => {
+              changeHandler({
+                target: { name: "companyId", value: newValue.id },
+              });
+            }}
+            loading={loading}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search Companies"
+                onChange={({ target: { value } }) => setQuery(value)}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <React.Fragment>
+                      {loading ? (
+                        <CircularProgress color="inherit" size={20} />
+                      ) : null}
+                      {params.InputProps.endAdornment}
+                    </React.Fragment>
+                  ),
+                }}
+              />
+            )}
+          />
+        ) : null}
         <InputField
           placeholder={form.formControls.amount.placeholder}
           name="amount"
           inputType="number"
+          value={
+            form.formControls.amount.value ? form.formControls.amount.value : ""
+          }
           validations={[{ type: "required" }, { type: "minLength", value: 3 }]}
           onValueChange={(event) => {
             changeHandler(event);
