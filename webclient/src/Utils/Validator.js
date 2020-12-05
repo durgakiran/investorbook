@@ -3,6 +3,10 @@ export function requiredValidator(value) {
       return true;
   }
 
+  if(typeof value === 'number' && Number.isFinite(value)) {
+    return true;
+  }
+
   if(typeof value === 'string' && value.trim() ) {
       return true;
   }
