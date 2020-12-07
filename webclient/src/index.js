@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://6250ae4aec4e.ngrok.io/v1/graphql',
+  uri: 'https://saving-orca-86.hasura.app/v1/graphql',
   cache: new InMemoryCache()
 });
 
