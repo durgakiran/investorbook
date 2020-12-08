@@ -7,7 +7,7 @@ import Amount from "../../Components/Amount/Amount";
 import styles from "./InvestorProfile.module.css";
 import TableActions from "../../Components/TableActions/TableActions";
 import AddInvestment from "./AddInvestment/AddInvestment";
-import { Button, makeStyles } from "@material-ui/core";
+import { Button, CircularProgress, makeStyles } from "@material-ui/core";
 import { ConfirmDialog } from "../../Components/ConfirmDialog/ConfirmDialog";
 
 const GET_INVESTOR = gql`
@@ -111,7 +111,7 @@ export default function InvestorProfile() {
   };
 
   if (loading) {
-    return <div>loading...</div>;
+    return <div><CircularProgress  color="primary" /></div>;
   }
 
   if (error) {

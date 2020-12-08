@@ -1,17 +1,18 @@
 import React from "react";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
-import { useStyles } from "../../Utils/DialogStyles";
+import { useDialogStyles, useStyles } from "../../Utils/DialogStyles";
 import { useButtonStyles, useButtonStyles2 } from "../../Utils/ButtonStyles";
 
 export function ConfirmDialog({ title, open, closeDialog, confirm }) {
   const classes = useStyles();
   const buttonClasses = useButtonStyles();
   const buttonClasses2 = useButtonStyles2();
+  const dialogStyles = useDialogStyles()
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onClose={() => closeDialog()}>
       <DialogTitle className={classes.root}>{title}</DialogTitle>
-      <DialogActions>
+      <DialogActions className={dialogStyles.root}>
         <Button
           type="button"
           className={buttonClasses2.root}

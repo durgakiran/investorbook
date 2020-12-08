@@ -12,6 +12,12 @@ export const useStyles = makeStyles({
   },
 });
 
+export const useDialogRadius = makeStyles({
+  root: {
+    border: "4px",
+  }
+})
+
 export const useDialogStyles = makeStyles({
   root: {
     padding: "28px 22px 18px 32px",

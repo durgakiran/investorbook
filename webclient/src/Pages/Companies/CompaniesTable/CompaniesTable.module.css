@@ -1,13 +1,20 @@
 .company-name {
     display: flex;
     align-items: center;
-    width: 300px;
+    width: 270px;
     font-weight: 500;
     font-size: 14px;
     line-height: 13px;
     color: #000000;
+    box-sizing: border-box;
 }
 
 .pl-10 {
     padding-left: 10px;
+    height: 80px;
+    box-sizing: border-box;
+}
+
+.w-300 {
+    width: 270px;
 }

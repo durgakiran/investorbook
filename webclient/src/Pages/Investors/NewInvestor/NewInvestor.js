@@ -75,18 +75,17 @@ export default function NewInvestor({ title, open, handleDialog }) {
   };
 
   return (
-    <div className="dialogContainer">
-      <Dialog
-        open={open}
-        fullWidth={true}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle className={classes.root}>{title}</DialogTitle>
-        <NewInvestorForm 
-          handleFormSubmit={(values) => handleSubmit(values)}
-          closeDialog={() => handleDialog(false)} />
-      </Dialog>
-    </div>
+    <Dialog
+      open={open}
+      fullWidth={true}
+      onClose={() => handleDialog(false)}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle className={classes.root}>{title}</DialogTitle>
+      <NewInvestorForm 
+        handleFormSubmit={(values) => handleSubmit(values)}
+        closeDialog={() => handleDialog(false)} />
+    </Dialog>
   );
 }

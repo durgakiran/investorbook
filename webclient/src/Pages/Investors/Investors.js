@@ -26,7 +26,6 @@ export default () => {
         handleInput={handleInput}
         handleDialog={handleDialog}
       />
-      <NewInvestor open={open} title='Add Investor' handleDialog={handleDialog} />
       <InvestorsTable
         query={query}
         currentPage={currentPage}
@@ -37,6 +36,7 @@ export default () => {
         count={count}
         currentPage={currentPage}
         handlePageChange={setCurrentPage}/>
+      <NewInvestor open={open} title='Add Investor' handleDialog={handleDialog} />
     </>
   );
 };

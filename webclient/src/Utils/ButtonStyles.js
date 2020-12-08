@@ -12,8 +12,6 @@ export const useButtonStyles = makeStyles({
 export const useButtonStyles2 = makeStyles({
   root: {
     fontWeight: 500,
-    fontSize: "13px",
-    lineHeight: "12px",
     color: "#434FBC",
     textTransform: "capitalize",
   },

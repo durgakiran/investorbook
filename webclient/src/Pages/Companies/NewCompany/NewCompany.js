@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import SnackBarElement from "../../../Components/SnackBar/SnackBar";
-import { useStyles } from "../../../Utils/DialogStyles";
+import { useStyles, useDialogRadius } from "../../../Utils/DialogStyles";
 import { INSERT_COMPANY } from "../../../Utils/graphql";
 import NewCompanyForm from "../NewCompanyForm/NewCompanyForm";
 
@@ -16,6 +16,7 @@ export default function NewCompany({ title, open, handleDialog }) {
     },
   });
   const classes = useStyles();
+  const dialogRadius = useDialogRadius();
 
   const handleAfterDataUpdate = (addedData) => {
     try {
@@ -50,8 +51,10 @@ export default function NewCompany({ title, open, handleDialog }) {
       <Dialog
         open={open}
         fullWidth={true}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        className={dialogRadius.root}
+        onClose={() => handleDialog(false)}
+        aria-labelledby="Add New Company"
+        aria-describedby="Add New Company"
       >
         <DialogTitle className={classes.root}>{title}</DialogTitle>
         <NewCompanyForm

@@ -29,12 +29,12 @@ export default function Investments({ id }) {
   if (error) {
     return <p>error</p>;
   }
-  if (data.investment.length === 0) return <p>No Investments!</p>;
+  if (data.investment.length === 0) return <span className={styles.investment}>No Investments!</span>;
 
   return data.investment.map((value, index) => {
     return (
       <span key={index} className={styles.investment}>
-        {value.company.name},{" "}
+        { index > 0 ? ', ' : '' } {value.company.name}
       </span>
     );
   });

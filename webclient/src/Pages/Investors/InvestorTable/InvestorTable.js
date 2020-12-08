@@ -73,7 +73,7 @@ export default function InvestorsTable({
             {columnMappings.map((value) => {
               if (value.id === "name") {
                 return (
-                  <td key={datum[value.id]}>
+                  <td key={datum[value.id]} className={styles["w-300"]}>
                     <Investor
                       name={datum[value.id]}
                       id={datum.id}

@@ -92,7 +92,7 @@ export default function AddInvestment({
   };
 
   return (
-    <Dialog fullWidth={true} open={open}>
+    <Dialog fullWidth={true} onClose={() => handleAddInvestment(false)} open={open}>
       <DialogTitle className={classes.root}>
         { actionId ?  `Edit Investment: ${companyName}` : "Add Investment"}
         <div className={styles["sub-title"]}>

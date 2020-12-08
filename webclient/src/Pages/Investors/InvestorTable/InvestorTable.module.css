@@ -2,3 +2,7 @@
     padding-left: 10px;
     box-sizing: border-box;
 }
+
+.w-300 {
+    width: 270px;
+}

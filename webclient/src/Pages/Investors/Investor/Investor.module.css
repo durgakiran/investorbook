@@ -1,13 +1,13 @@
 .image {
   border-radius: 50%;
   margin: 0px 20px 0px 0;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .name {
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 14px;
   color: #000000;
 }
@@ -15,5 +15,6 @@
 .investor {
   display: flex;
   align-items: center;
-  width: 300px;
+  width: 270px;
+  box-sizing: border-box;
 }

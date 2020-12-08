@@ -39,7 +39,7 @@ const StyledTabs = withStyles({
     "& .MuiTab-wrapper": {
       flexDirection: "row",
       textTransform: "capitalize",
-      fontSize: "18px",
+      fontSize: "14px",
       justifyContent: "flex-start",
       "& .MuiTabItem-labelGroup": {
         minWidth: 0,
@@ -49,6 +49,10 @@ const StyledTabs = withStyles({
         alignItems: "center",
       },
     },
+    "& button": {
+      minWidth: "unset",
+      marginRight: "30px"
+    }
   },
   indicator: {
     backgroundColor: "#000000",

@@ -25,11 +25,17 @@ export default function CompanyInvestors({ id }) {
   if(error) {
       return <p>error</p>
   }
-  if (data.investment.length === 0) return <p>No Investors found!</p>;
+  if (data.investment.length === 0) return <span className={styles.investment}>No Investors found!</span>;
 
   return (
       data.investment.map((value, index) => {
-          return <span key={index} className={styles.investment}>{value.investor.name}, </span>
+          const prefix = (index > 0) ? ', ' : ''
+          return (
+            <>
+              <span>{prefix}</span>
+              <span key={index} className={styles.investment}>{value.investor.name} </span>
+            </>
+          )
       })
   )
 }
